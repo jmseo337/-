@@ -1,0 +1,471 @@
+<style>
+:root {
+    --wiki-main-color: #ecc259; 
+    --wiki-text-color: #ffffff;
+    --wiki-link-color: #0275d8;
+    --wiki-border-color: #ddd;
+    --wiki-bg-gray: #eee;
+    --wiki-max-width: 700px;
+    --wiki-font-size: 15px;
+    --wiki-line-height: 1.5;
+}
+
+#wikiwrap {
+    --wiki-main-color: #ecc259; 
+}
+
+.wiki-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.wiki-main-table {
+    order: 1;
+}
+
+.wiki-index {
+    order: 2;
+}
+
+@media (min-width: 768px) {
+    .wiki-container {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .wiki-index {
+        order: 1;
+        flex: 0 0 250px;
+        top: 20px;
+    }
+
+    .wiki-main-table {
+        order: 2;
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+#wikiwrap {
+    font-family: "Pretendard JP Variable", "Pretendard JP", "Pretendard", Pretendard, 
+                 -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", 
+                 "Segoe UI", "Hiragino Sans", "Apple SD Gothic Neo", Meiryo, 
+                 "Noto Sans JP", "Noto Sans KR", "Malgun Gothic", Osaka, 
+                 "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    box-sizing: border-box;
+    font-size: var(--wiki-font-size);
+    line-height: var(--wiki-line-height);
+    max-width: var(--wiki-max-width);
+    margin: 0 auto;
+}
+
+#wikiwrap a,
+.text1 a,
+.wiki-category a,
+.wiki-index a {
+    color: var(--wiki-link-color);
+    text-decoration: none;
+}
+
+#wikiwrap a::before,
+#wikiwrap a::after,
+.text1 a::before,
+.wiki-category a::before,
+.wiki-index a::before {
+    content: none !important;
+}
+
+.wiki-toggle-btn {
+    color: inherit !important;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+.wiki-main-table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 2px solid var(--wiki-main-color);
+    font-size: 0.96em;
+    line-height: var(--wiki-line-height);
+    margin: 20px 0 16px;
+}
+
+.wt-name {
+    padding: 5px 10px;
+    border: 2px solid var(--wiki-main-color);
+    text-align: center;
+    background-color: var(--wiki-main-color);
+    color: var(--wiki-text-color);
+}
+
+.wt-copyright {
+    padding: 5px 10px;
+    border: 1px solid var(--wiki-border-color);
+    text-align: center;
+    color: #000;
+}
+
+.wt-color {
+    width: 30%;
+    padding: 5px 10px;
+    border: 1px solid var(--wiki-border-color);
+    border-right: 1px solid var(--wiki-border-color);
+    border-bottom: 1px solid var(--wiki-border-color);
+    text-align: center;
+    background-color: var(--wiki-main-color);
+    color: var(--wiki-text-color);
+}
+
+.wt-detail {
+    padding: 5px 10px;
+    border: 1px solid var(--wiki-border-color);
+    border-bottom: 1px solid var(--wiki-border-color);
+    text-align: left;
+    color: #000;
+}
+
+.wiki-main-table tr:last-child > td {
+    border-bottom: none;
+}
+
+summary {
+    list-style-type: none;
+    opacity: 0.5;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+details[open] summary {
+    opacity: 1;
+}
+
+.wiki-h1-icon ion-icon,
+.wiki-h2-icon ion-icon,
+.wiki-h3-icon ion-icon {
+    transition: transform 0.3s ease;
+    transform: rotate(-90deg);
+}
+
+details[open] .wiki-h1-icon ion-icon,
+details[open] .wiki-h2-icon ion-icon,
+details[open] .wiki-h3-icon ion-icon {
+    transform: rotate(0deg);
+}
+
+.text1 {
+    font-size: var(--wiki-font-size);
+    line-height: var(--wiki-line-height);
+}
+
+.wiki-category {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: normal;
+    line-height: var(--wiki-line-height);
+    margin: 0 0 1em;
+    padding: 0.2rem 0.5rem;
+}
+
+.wiki-h1 {
+    font-size: 1.8em;
+    border-bottom: 1px solid #ccc;
+    margin: 1.2em 0 0.7em;
+    padding-bottom: 5px;
+    font-weight: bold;
+}
+
+.wiki-h2 {
+    font-size: 1.6em;
+    border-bottom: 1px solid #ccc;
+    margin: 1.2em 0 0.7em;
+    padding-bottom: 5px;
+    font-weight: bold;
+}
+
+.wiki-h3 {
+    font-size: 1.4em;
+    border-bottom: 1px solid #ccc;
+    margin: 1.2em 0 0.7em;
+    padding-bottom: 5px;
+    font-weight: bold;
+}
+
+.wiki-h1-icon,
+.wiki-h2-icon,
+.wiki-h3-icon {
+    color: #666;
+    float: left;
+    font-weight: 400;
+    line-height: 1em;
+    text-align: center;
+    width: 0.9em;
+    margin-right: 0.4em;
+    margin-top: 0.2em;
+}
+
+.wiki-index {
+    border-collapse: collapse;
+    width: auto;
+    max-width: 250px;
+    border: 1px solid #ccc;
+    margin: 0 0 20px 5px;
+    line-height: 1.8;
+}
+
+.wiki-quote {
+    border-collapse: collapse;
+    width: auto;
+    height: auto;
+    margin: 1em 0;
+}
+
+.wiki-quote td {
+    width: 100%;
+    border: 2px dashed #ccc;
+    border-left: 5px solid var(--wiki-main-color);
+    background: var(--wiki-bg-gray);
+    padding: 1em;
+    line-height: 1.6;
+}
+
+.wiki-quote hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 0.5em 0;
+}
+
+.wiki-footnote {
+    border-top: 1px solid #777;
+    margin: 1.5em 0;
+    padding: 0.5em 0;
+    font-size: 0.9em;
+}
+.wiki-footnote p {
+    margin: 5px 0;
+}
+
+.wikigreenicon {
+    background: green;
+    color: white;
+    padding: 0 0.08em;
+    font-size: var(--wiki-font-size);
+    vertical-align: middle;
+}
+
+.wikigreentext {
+    color: green;
+    vertical-align: middle;
+    font-size: var(--wiki-font-size);
+    line-height: var(--wiki-line-height);
+}
+
+.wikigreen:hover {
+    text-decoration: underline;
+    text-decoration-color: green;
+}
+
+.wiki-img-sing {
+    width: 100%;
+    margin: 1em 0;
+    border-collapse: collapse;
+    line-height: 0;
+}
+
+.wiki-img-sing td {
+    padding: 0;
+    border: 2px solid var(--wiki-main-color);
+}
+
+.wiki-img-sing img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.wiki-img-sing iframe {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 0;
+    box-shadow: none;
+}
+.wiki-img-sing iframe[src*="youtube.com"] {
+    border-radius: 0 !important;
+}
+.wiki-fn-link {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none !important;
+}
+.wiki-fn-tooltip {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 12px;
+    width: max-content;
+    max-width: 250px;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: left;
+    white-space: normal;
+    margin-bottom: 8px; 
+    
+    font-size: calc(var(--wiki-font-size) * 0.9);
+    line-height: var(--wiki-line-height);
+    font-weight: normal !important;
+}
+
+.wiki-fn-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: #ccc transparent transparent transparent; 
+}
+
+@media (min-width: 768px) {
+    .wiki-fn-link:hover .wiki-fn-tooltip {
+        display: block;
+    }
+}
+
+.wiki-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.3);
+    z-index: 99998;
+}
+.wiki-modal-overlay.active {
+    display: block;
+}
+.wiki-modal-box {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    width: 80%;
+    max-width: 300px;
+    z-index: 99999;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    
+    font-size: calc(var(--wiki-font-size) * 0.9);
+    line-height: var(--wiki-line-height);
+    font-weight: normal !important;
+}
+</style>
+<div id="wikiwrap">
+  
+      <div style="margin-bottom: 1.5rem;">
+        <h1 style="font-size: 2.25rem; font-weight: 700; line-height: 1; margin: 0;">대원(달의 연인 - 보보경심 려)</h1>
+        <p style="font-size: .9rem; margin: .5rem 0 0; color: rgb(85, 85, 85);">최근 수정 시각: <time>2026-07-26 11:39:28</time></p>
+      </div>
+  <div class="wiki-category" style="display: flex; align-items: center; flex-wrap: wrap;">분류:&nbsp; <a href="https://namu.wiki/w/%EB%B6%84%EB%A5%98:%EB%8B%AC%EC%9D%98%20%EC%97%B0%EC%9D%B8%20-%20%EB%B3%B4%EB%B3%B4%EA%B2%BD%EC%8B%AC%20%EB%A0%A4/%EB%93%B1%EC%9E%A5%EC%9D%B8%EB%AC%BC" target="_blank">달의 연인 - 보보경심 려/등장인물</a><span style="border-left: 1px solid #888; display: inline-block; height: .8rem; margin: 0 .4rem -.1rem;"></span><a href="https://namu.wiki/w/%EB%B6%84%EB%A5%98:%ED%95%9C%EA%B5%AD%20%EB%93%9C%EB%9D%BC%EB%A7%88%20%EC%BA%90%EB%A6%AD%ED%84%B0" target="_blank">한국 드라마 캐릭터</a></div>
+  
+  <div class="wiki-container">
+    <table class="wiki-main-table">
+      <tbody>
+        <tr>
+          <td class="wt-name" colspan="2">
+            <b><span style="font-size: 20px;">대원</span></b><br />
+            <b><span style="font-size: 13px; line-height: 180%;"><ruby>大<rt></rt></ruby> <ruby>怨<rt></rt></ruby></span></b>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="padding: 0; border: 2px solid var(--wiki-main-color); border-bottom: var(--wiki-border-color);">
+            <div style="text-align: center;">
+              <img src="https://pbs.twimg.com/media/HI_u0m2bsAA6dkz?format=jpg&name=large" width="100%" style="display:block;" />
+            </div>
+          </td>
+        </tr>
+        
+        <tr><td class="wt-color">본명</td><td class="wt-detail">대원 (大怨)<a name="돌아가기-fn-label-1"></a><a href="#각주-fn-label-1" class="wiki-fn-link" onclick="openWikiModal(event, this)"><sup>[스포일러]</sup><span class="wiki-fn-tooltip"><span style="color: var(--wiki-link-color);">[스포일러]</span> <span style="color: #333;">발해 멸망 전에는 大元이라고 썼다. 둘다 음은 같지만 뜻은...</span></span></a><!-- notionvc: 95390bd8-1a01-4685-8fb5-f97631d19e8f --></td></tr>
+<tr><td class="wt-color">가족</td><td class="wt-detail">아버지 대원겸</td></tr>
+
+      </tbody>
+    </table>
+    
+        <table class="wiki-index">
+        <tbody>
+        <tr style="padding: 0 20px;">
+        <td style="width: 100%; margin-left: 5px; padding: 12px 20px 18px 20px; font-size: .95rem; line-height: 1.5; position: relative;">
+        <div onclick="(function(header){var body=header.closest('td').querySelector('.wiki-index-body');var btn=header.querySelector('button');var isOpen=body.style.display!=='none';body.style.display=isOpen?'none':'block';if(btn)btn.style.transform=isOpen?'rotate(90deg)':'rotate(0deg)';})(this)" style="display: flex; align-items: center; justify-content: space-between; margin-left: -5px; margin-bottom: 4px; cursor: pointer;" title="접기/펼치기">
+        <div><a name="목차"></a><span style="font-size: 1.25em;">목차</span></div>
+        <button style="background:none;border:none;cursor:pointer;padding:2px 4px;color:#555;transition:transform 0.25s ease;display:flex;align-items:center;"><ion-icon name="chevron-down-outline" style="font-size:1.4em;"></ion-icon></button>
+        </div>
+        <div class="wiki-index-body">
+        <a style="padding-left: 0px;" href="#목차1-">1.</a> 개요<br />
+<a style="padding-left: 0px;" href="#목차2-">2.</a> 작중 행적<br />
+<a style="padding-left: 0px;" href="#목차3-">3.</a> 평가<br />
+
+        </div>
+        </td></tr></tbody></table>
+  </div>
+  <details open><summary class="text1"><h2 class="wiki-h1"><span style="float: right; color: var(--wiki-link-color); font-size: 0.85rem; margin-top: 0.2em; cursor: pointer; text-decoration: none !important;">[편집]</span><span class="wiki-h1-icon"><ion-icon name="chevron-down-outline"></ion-icon></span> <a name="목차1-"></a><a href="#목차">1.</a> 개요</h2></summary>
+<table class="wiki-quote"><tbody><tr><td class="text1" style="border-left: 5px solid #ecc259;">그림자의 파편 따위로는 태양에 닿을 수 없었다.</td></tr></tbody></table>
+<p class="text1"><span style="color: rgb(33, 37, 41); font-family: &quot;Pretendard JP&quot;, Pretendard, -apple-system, BlinkMacSystemFont, &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, &quot;Noto Sans CJK KR&quot;, NanumBarunGothic, Roboto, &quot;Segoe UI&quot;, &quot;Malgun Gothic&quot;, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, sans-serif, emoji; font-size: 15px; background-color: rgb(255, 255, 255);">드라마 </span><font color="#0275d8" face="Pretendard JP, Pretendard, -apple-system, BlinkMacSystemFont, Apple SD Gothic Neo, Noto Sans KR, Noto Sans CJK KR, NanumBarunGothic, Roboto, Segoe UI, Malgun Gothic, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, sans-serif, emoji"><span style="text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; transition: color 0.05s ease-in; cursor: pointer; font-size: 15px; background-color: rgb(255, 255, 255);"><a href="https://namu.wiki/w/%EB%8B%AC%EC%9D%98%20%EC%97%B0%EC%9D%B8%20-%20%EB%B3%B4%EB%B3%B4%EA%B2%BD%EC%8B%AC%20%EB%A0%A4" target="_blank">달의 연인 - 보보경심 려</a></span></font><span style="color: rgb(33, 37, 41); font-family: &quot;Pretendard JP&quot;, Pretendard, -apple-system, BlinkMacSystemFont, &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, &quot;Noto Sans CJK KR&quot;, NanumBarunGothic, Roboto, &quot;Segoe UI&quot;, &quot;Malgun Gothic&quot;, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, sans-serif, emoji; font-size: 15px; background-color: rgb(255, 255, 255);">의 남주인공 <a href="https://namu.wiki/w/%EC%99%95%EC%86%8C(%EB%8B%AC%EC%9D%98%20%EC%97%B0%EC%9D%B8%20-%20%EB%B3%B4%EB%B3%B4%EA%B2%BD%EC%8B%AC%20%EB%A0%A4)" target="_blank">왕소</a>의 <a href="https://namu.wiki/w/%EA%B8%88%EA%B5%B0#s-2.4" target="_blank">금군</a>.</span></p>
+</details>
+<details open><summary class="text1"><h2 class="wiki-h1"><span style="float: right; color: var(--wiki-link-color); font-size: 0.85rem; margin-top: 0.2em; cursor: pointer; text-decoration: none !important;">[편집]</span><span class="wiki-h1-icon"><ion-icon name="chevron-down-outline"></ion-icon></span> <a name="목차2-"></a><a href="#목차">2.</a> 작중 행적</h2></summary>
+<table class="text1" style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;" data-ke-align="alignLeft"><tbody><tr><td style="width: 100%; border: 1px solid gray; border-top: 5px solid orange; padding: 12px;"><span style="font-size: 1.3em;">이 문서에</span> <a style="color: #0275d8; font-size: 1.3em;" href="https://namu.wiki/w/%EC%8A%A4%ED%8F%AC%EC%9D%BC%EB%9F%AC" target="_blank" rel="noopener">스포일러</a><span style="font-size: 1.3em;">가 포함되어 있습니다.</span><br /><br />이 문서가 설명하는 작품이나 인물 등에 대한 줄거리, 결말, 반전 요소 등을 직·간접적으로 포함하고 있습니다.</td></tr></tbody></table>
+<table class="wiki-quote"><tbody><tr><td class="text1" style="border-left: 5px solid #ecc259;"><b>“황자님은 앞으로도 모르셔야 합니다.”</b></td></tr></tbody></table>
+<table class="wiki-quote"><tbody><tr><td class="text1" style="border-left: 5px solid #ecc259;"><b>“항상. 이유 따위는 없어.”</b><div><b>“아버지의 명령을 따르고 실행에 옮기는 것이 내 의무니까.”</b></div><div><b><br></b></div><div><b>“그렇지만 4황자의 옷깃 한 자락도 만지지 못하겠다면,</b></div><div><b>피부에 닿는 것조차 얼굴이 뜨거워져 하지 못하겠다면⋯⋯⋯</b></div><div><b>그럼 난 어쩌지?⋯⋯⋯”</b><a name="돌아가기1"></a><a href="#각주1" class="wiki-fn-link" onclick="openWikiModal(event, this)"><sup>[1]</sup><span class="wiki-fn-tooltip"><span style="color: var(--wiki-link-color);">[1]</span> <span style="color: #333;">왕소를 죽이고 싶었던 적이 있었냐 묻는 이에게 답한 말.</span></span></a></div></td></tr></tbody></table>
+<p class="text1">사실은 왕소를 죽이기 위해 위장취업한 자객이다. 본래는 발해 마지막 군주인 <a href="https://namu.wiki/w/%EB%8C%80%EC%9D%B8%EC%84%A0" target="_blank">대인선</a>의 조카딸로, 멸망하기 전까지는 나름 황족이었다.<a name="돌아가기2"></a><a href="#각주2" class="wiki-fn-link" onclick="openWikiModal(event, this)"><sup>[2]</sup><span class="wiki-fn-tooltip"><span style="color: var(--wiki-link-color);">[2]</span> <span style="color: #333;">주변 발해인들 왈: 이때까지만 해도 아버지와 사이가 좋았던 모양.</span></span></a><div><br></div><div>멸망 후 아버지와 함께 고려로 망명했다만 조국을 잃은 아버지가 멸국의 원인을 고려에게서 찾고, 대원을 고려 멸망을 위한 도구로 양육하면서 둘의 사이가 평범한 부녀관계가 아닌 일종의 주종관계가 되었다.<a name="돌아가기3"></a><a href="#각주3" class="wiki-fn-link" onclick="openWikiModal(event, this)"><sup>[3]</sup><span class="wiki-fn-tooltip"><span style="color: var(--wiki-link-color);">[3]</span> <span style="color: #333;">유년시절부터 자객으로 키워지며 짐승과 사람을 서슴없이 죽이는 연습을 꾸준히 해온 모양.</span></span></a>&nbsp;<span style="font-size: 0.95em;">다만 그렇게 자라다보니 당연히 </span><a href="https://namu.wiki/w/%EC%95%A0%EC%A0%95%EA%B2%B0%ED%95%8D" target="_blank" style="font-size: 0.95em;">애정결핍</a><span style="font-size: 0.95em;">이 생긴다. 아버지에게 당당하게 애정을 요구할 수는 없으니 그 여파로 인정욕구가 강해졌고, 자아가 사라졌다.&nbsp;</span><span style="font-size: 0.95em;">그 덕에 어린 시절부터 죽여보지 않은 것은 거의 없었다. 한낱 개미부터 토끼, 늑대, 심지어 사람까지. 아버지의 명령은 절대적이었고 그 덕에몸에는 항상 피비린내가 나 하루종일 물가에서 빨래하는 일이 잦았다. 그 마저도 다시 원상복귀였지만.</span></div><!-- notionvc: c7482297-4927-4056-bcef-00a2646d03e4 --><div><span style="font-size: 0.95em;"><br></span></div><div><span style="font-size: 14.44px;">그리고 어떻게든 신분을 조작해 황실 친위대인 고려 금군에 발탁된다. 우연히 왕소가 신주에서 송악으로 돌아오는 날짜와 겹쳤을 뿐만 아니라, 평소 왕소를 아픈 손가락처럼 여기던 왕건이 대원을 왕소에게 배정시키며 처음 만나지만⋯⋯</span></div><div><span style="font-size: 14.44px;"><br></span></div><div>말 그대로 <span style="font-weight: bold;">첫 인상은 최악</span>이었다. 왕소는 제 말을 곧이곧대로 따르는 대원이 거슬리고, 대원은 원하는 대로 해줬는데도 불만이 많아 귀찮아 죽겠고⋯⋯. 여기까지만 해도 대원이 왕소를 죽이는 건 <strike style="color: rgb(180, 180, 180);">순수 피지컬을 제외하고는</strike> 별 장애물이 없었으나, 문제는 왕소가 대원의 뒷조사를 시작하고 과거를 알게 되면서 생긴다.</div><div><br></div><div>왕소의 결핍은 유년 시절에 충분한 애정을 받지 못하고 학대 당했다는 지점인데, 이 지점과 대원의 유년기가 겹쳐져 <span style="font-weight: bold;">왕소가 대원에게 자신의 어린 시절을 투영하게 된다.</span> 요컨대 불쌍히 여기게 된다. 갑작스럽게 자신을 배려하고 신경쓰는 듯한 모습은 대원에게 당혹감과 구역감을 주지만⋯⋯ 그 배려가 싫었다는 말은 거짓말일 테다.&nbsp;<span style="font-size: 0.95em;">요약하자면 대원은 고작 그 다정과 위선 사이 애매한 친절에 (왕소의 의도와는 무관하게) </span><a href="https://namu.wiki/w/%EC%83%89%EC%A0%95%EB%A7%9D%EC%83%81" target="_blank" style="font-size: 0.95em;">넘어가버린다.</a><span style="font-size: 0.95em;">&nbsp;</span></div><div><span style="font-size: 0.95em;"><br></span></div><div><span style="font-size: 14.44px;">하지만 왕소는 따로 <a href="https://namu.wiki/w/%ED%95%B4%EC%88%98(%EB%8B%AC%EC%9D%98%20%EC%97%B0%EC%9D%B8%20-%20%EB%B3%B4%EB%B3%B4%EA%B2%BD%EC%8B%AC%20%EB%A0%A4)" target="_blank">은애하는 사람</a>이 있었고, 대원은 시간이 흐른 후에야 이 사실을 알게 되어 분노하지만 안타깝게도 그 분노가 살의로 이어지지 못했다. 왕소가 자고 있는 순간에 목을 조르려 해도 목을 조른다는 생각보다 접촉했다는 사실이 더 크게 다가와버린다. 즉, <span style="font-weight: bold;">이어지지도 못할 사랑 때문에 자객으로서의 능력을 상실</span>한다.&nbsp;</span></div><div><span style="font-size: 14.44px;"><br></span></div><div><span style="font-size: 14.44px;">이후 이상하리만치 암살이 늦어지는 대원을 수상히 여긴 아버지 대원겸이 대원을 불러 벌로 한쪽 눈을 <span style="font-weight: bold;">난도질</span>한다.<a name="돌아가기4"></a><a href="#각주4" class="wiki-fn-link" onclick="openWikiModal(event, this)"><sup>[4]</sup><span class="wiki-fn-tooltip"><span style="color: var(--wiki-link-color);">[4]</span> <span style="color: #333;">드라마에서 흉이라는 소재가 자주 다뤄지는데, 대원의 흉은 왕소의 흉과 달리 화장으로도 가릴 수 없고 평생 지워지지 않을 흉이라는 점에서 다르다.</span></span></a> 결국 삶의 의지를 잃은 대원은 왕소의 앞에서<span style="font-weight: bold;"> <a href="https://namu.wiki/w/%EC%9E%90%EC%82%B4" target="_blank">자결</a></span>하며 등장을 마친다.</span></div></p>
+</details>
+<details open><summary class="text1"><h2 class="wiki-h1"><span style="float: right; color: var(--wiki-link-color); font-size: 0.85rem; margin-top: 0.2em; cursor: pointer; text-decoration: none !important;">[편집]</span><span class="wiki-h1-icon"><ion-icon name="chevron-down-outline"></ion-icon></span> <a name="목차3-"></a><a href="#목차">3.</a> 평가</h2></summary>
+<p class="text1">공식 커플인 왕소와 해수의 사랑에 <span style="font-weight: bold;">전혀 도움도 방해도 되지 못한 인물</span>로, 미련하다는 평이 많다.&nbsp;<div><br></div><div>하지만 죽음조차 불사할 정도로 왕소를 사랑했음에도 불구하고 그의 연인인 해수를 해치지도 못하고 오히려 왕소의 명령이라면 지켜줬을 것이라는 점이 상당히 모순된다. 이는 어렸을 적부터 훈련 받아온 무조건적인 복종에 의한 것일지도 모르지만, 삭제된 장면에 의하면 대원과 해수가 가끔 다미원에서 시시콜콜한 대화를 했었다는 이야기도 있다.<a name="돌아가기5"></a><a href="#각주5" class="wiki-fn-link" onclick="openWikiModal(event, this)"><sup>[5]</sup><span class="wiki-fn-tooltip"><span style="color: var(--wiki-link-color);">[5]</span> <span style="color: #333;">애초에 대원이라는 인물 자체가 라포를 형성하기 어려운 사람이 아니다. 속되게 말하자면 친구를 처음 사귄 찐따.</span></span></a></div></p>
+</details>
+
+
+            <div class="text1 wiki-footnote">
+                <p><a name="각주-fn-label-1"></a><a href="#돌아가기-fn-label-1">[스포일러]</a> 발해 멸망 전에는 大元이라고 썼다. 둘다 음은 같지만 뜻은...</p>
+<p><a name="각주1"></a><a href="#돌아가기1">[1]</a> 왕소를 죽이고 싶었던 적이 있었냐 묻는 이에게 답한 말.</p>
+<p><a name="각주2"></a><a href="#돌아가기2">[2]</a> 주변 발해인들 왈: 이때까지만 해도 아버지와 사이가 좋았던 모양.</p>
+<p><a name="각주3"></a><a href="#돌아가기3">[3]</a> 유년시절부터 자객으로 키워지며 짐승과 사람을 서슴없이 죽이는 연습을 꾸준히 해온 모양.</p>
+<p><a name="각주4"></a><a href="#돌아가기4">[4]</a> 드라마에서 흉이라는 소재가 자주 다뤄지는데, 대원의 흉은 왕소의 흉과 달리 화장으로도 가릴 수 없고 평생 지워지지 않을 흉이라는 점에서 다르다.</p>
+<p><a name="각주5"></a><a href="#돌아가기5">[5]</a> 애초에 대원이라는 인물 자체가 라포를 형성하기 어려운 사람이 아니다. 속되게 말하자면 친구를 처음 사귄 찐따.</p>
+
+            </div>
+            <script>
+            function openWikiModal(e, el) {
+                if (window.innerWidth >= 768) return; 
+                e.preventDefault(); 
+                const existingOverlay = document.getElementById('wiki-fn-overlay');
+                if (existingOverlay) existingOverlay.remove();
+                const tooltipContent = el.querySelector('.wiki-fn-tooltip').innerHTML;
+                const overlay = document.createElement('div');
+                overlay.id = 'wiki-fn-overlay';
+                overlay.className = 'wiki-modal-overlay active';
+                const modal = document.createElement('div');
+                modal.className = 'wiki-modal-box';
+                modal.innerHTML = tooltipContent;
+                overlay.appendChild(modal);
+                document.body.appendChild(overlay);
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === overlay) {
+                        overlay.remove();
+                    }
+                });
+            }
+            </script>
+        </div>
